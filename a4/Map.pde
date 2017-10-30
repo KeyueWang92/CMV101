@@ -5,7 +5,7 @@ class Map{
     stateid = new HashMap<String, Integer>();
     this.geoMap = geoMap; 
     geoMap.readFile("usContinental");   // Read shapefile.
-    geoMap.writeAttributesAsTable(51);
+    //geoMap.writeAttributesAsTable(51); //get mapinfo
     for (int id = 1; id < 52; id++) {
       stateid.put(geoMap.getAttributeTable().findRow(str(id),0).getString("Abbrev"), id);
     }
@@ -21,12 +21,12 @@ class Map{
     int id = geoMap.getID(mouseX, mouseY);
     if (id != -1) {
       fill(180, 120, 120);      // Highlighted land colour.
-    geoMap.draw(id);  
-    // get the state name using id.
-    String name = geoMap.getAttributeTable().findRow(str(id),0).getString("Abbrev");    
-    fill(0);
-    text(name, mouseX+5, mouseY-5);
+      geoMap.draw(id);  
+      // get the state name using id.
+      String name = geoMap.getAttributeTable().findRow(str(id),0).getString("Abbrev");    
+      fill(0);
+      text(name, mouseX+5, mouseY-5);
+    }
   }
-}
 }
  
