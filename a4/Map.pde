@@ -11,7 +11,7 @@ class Map{
     }
   }
   
-  void draw_map(){
+  void draw(){
     background(255);  // Ocean colour
     stroke(0,40);               // Boundary colour
     fill(210);          // Land colour
