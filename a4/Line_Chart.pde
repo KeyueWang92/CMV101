@@ -9,6 +9,7 @@ class Line_Chart{
   float x_frame = 60;
   float y_frame = 40;
   ArrayList<ArrayList<Line>> lines = new ArrayList<ArrayList<Line>>();
+  Button[] bs;
   
   class Line{
     float x1,x2,y1,y2,value1, value2, x, y;
@@ -26,6 +27,31 @@ class Line_Chart{
     }
   }
   
+  class Button{
+    float x, y, wid, hgt;
+    String lastname;
+    int id;
+    Button(String lastname, int id, float x, float y){
+      this.lastname = lastname;
+      this.id = id;
+      this.x = x;
+      this.y = y;
+      wid = 60;
+      hgt = 15;
+    }
+    
+    void draw(){
+      fill(100);
+      rect(x,y,wid,hgt);
+      text(lastname, x,y);
+    }
+    boolean isButtonClicked(){
+      if (mouseX >= x && mouseX <= x + wid && mouseY >= y && mouseY <= y + hgt)
+      return true;
+      else return false;
+    }
+  }
+
   Line_Chart(Parser p){
     this.fundings = p.get_fundings();
     this.months = p.get_months();
@@ -41,7 +67,10 @@ class Line_Chart{
       this.lines.add(aline);
     }
     this.set_color();
+    width_bar = 0.65*0.8*600/months.length;
+    gap = 0.35*0.8*600/months.length;
     this.arrange();
+    this.buttons();
   }
   
   void set_color(){
@@ -55,8 +84,7 @@ class Line_Chart{
   }
   
   void arrange(){
-    width_bar = 0.65*0.8*600/months.length;
-    gap = 0.35*0.8*600/months.length;
+
     for (ArrayList<Line> line: lines){
       for(Line l: line){
       l.x1 = x_frame+ (l.index+1)*gap + (l.index * width_bar) + width_bar/2;
@@ -71,6 +99,7 @@ class Line_Chart{
   
   void draw(){
     draw_axis();
+    draw_buttons();
     for(int i = 0; i < fundings.length; i++){
       fill(colors[i][0], colors[i][1], colors[i][2]);
       stroke(colors[i][0], colors[i][1], colors[i][2]);
@@ -79,8 +108,8 @@ class Line_Chart{
   }
   
   void draw_axis(){
-    stroke(100);
-    fill(100);
+    stroke(150);
+    fill(150);
     textAlign(LEFT);
     textSize(12);
     // add the x-axis names
@@ -96,10 +125,7 @@ class Line_Chart{
     float temp = 800-y_frame;
     float y_gap =  0.8*800/10;
     int y_gap_value = int(maxfunding/10/1000000); //funding in million
-    println(maxfunding);
-    println(y_gap);
     int y_mark = 0; 
-    println(temp);
     while(temp >= 0.1*800){
       line(x_frame, temp, 600-x_frame+20, temp);
       text(y_mark*y_gap_value + "M", 20, temp);
@@ -129,5 +155,21 @@ class Line_Chart{
       ellipse(line.get(i).x1,line.get(i).y1,5,5);
     }
     ellipse(line.get(line.size()-1).x2, line.get(line.size()-1).y2, 5,5);
+  }
+  
+  void buttons(){
+    //bs = new Button[p.candidates.length];
+    bs = new Button[8];
+    //for (int i = 0; i < p.candidates.length; i++){
+    for (int i = 0; i < 8; i++){ 
+      Button b = new Button(p.candidates[i].lastname,i,x_frame + (i+1)*60, y_frame);
+      bs[i] = b;
+    }
+  }
+  
+  void draw_buttons(){
+    for (int i = 0; i < 8; i++){
+      bs[i].draw();
+    }
   }
 }

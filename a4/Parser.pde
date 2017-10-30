@@ -9,8 +9,8 @@ class Parser{
     headers = split(lines[0], ",");
     for(int i = 1; i < lines.length; i++){
       String[] data = split(lines[i], ",");
-      String lastname = data[0];
-      String firstname = data[1];
+      String lastname = data[0].substring(1);
+      String firstname = data[1].substring(0,data[1].length()-1);
       String state = data[2];
       String party = data[3];
       //skip party2
@@ -24,7 +24,7 @@ class Parser{
       funding[6] = float(data[11]);
       funding[7] = float(data[12]);
       funding[8] = float(data[13]);
-      candidates[i-1] = new Candidate(lastname+firstname, state, party, funding);
+      candidates[i-1] = new Candidate(lastname, lastname+firstname, state, party, funding);
     }
   }
   
@@ -49,10 +49,12 @@ class Parser{
 
 class Candidate{
   String name;
+  String lastname;
   String state;
   String party;
   float[] funding;
-  Candidate(String name, String state, String party, float[] funding){
+  Candidate(String lastname, String name, String state, String party, float[] funding){
+    this.lastname = lastname;
     this.name = name;
     this.state = state;
     this.party = party;
