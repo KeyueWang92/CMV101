@@ -79,8 +79,8 @@ class Line_Chart{
   }
   
   void draw_axis(){
-    stroke(50);
-    fill(50);
+    stroke(100);
+    fill(100);
     textAlign(LEFT);
     textSize(12);
     // add the x-axis names
@@ -93,16 +93,20 @@ class Line_Chart{
     }
 
     // add the y-axis lines
-    //float temp = 800-y_frame;
-    //float y_gap =  0.8*800/maxfunding;
-    //int y_mark = 0; 
-    //while(temp >= 0.1*800){
-    //  line(x_frame, temp, 600-x_frame+20, temp);
-    //  text(Integer.toString(y_mark*10), x_frame-0.045*600, temp);
-    //  y_mark ++;
-    //  temp -= y_gap;
-    //}
-    //line(x_frame, height-y_frame, x_frame, temp);
+    float temp = 800-y_frame;
+    float y_gap =  0.8*800/10;
+    int y_gap_value = int(maxfunding/10/1000000); //funding in million
+    println(maxfunding);
+    println(y_gap);
+    int y_mark = 0; 
+    println(temp);
+    while(temp >= 0.1*800){
+      line(x_frame, temp, 600-x_frame+20, temp);
+      text(y_mark*y_gap_value + "M", 20, temp);
+      y_mark ++;
+      temp -= y_gap;
+    }
+    line(x_frame, height-y_frame, x_frame, temp);
     
     
     //// add the x-y-labels
