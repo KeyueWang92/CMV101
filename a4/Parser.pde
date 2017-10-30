@@ -1,22 +1,12 @@
 class Parser{
-  public String[] lines;
+  private String[] lines;
+  public String[] headers;
   public Candidate[] candidates;
-  class Candidate{
-    String name;
-    String state;
-    String party;
-    float[] funding;
-    Candidate(String name, String state, String party, float[] funding){
-      this.name = name;
-      this.state = state;
-      this.party = party;
-      this.funding = funding;
-    }
-  }
+  
   Parser(String filename) {
     lines = loadStrings(filename);
     candidates = new Candidate[lines.length-1];
-    //headers = split(lines[0], ",");
+    headers = split(lines[0], ",");
     for(int i = 1; i < lines.length; i++){
       String[] data = split(lines[i], ",");
       String lastname = data[0];
@@ -36,5 +26,36 @@ class Parser{
       funding[8] = float(data[13]);
       candidates[i-1] = new Candidate(lastname+firstname, state, party, funding);
     }
+  }
+  
+  float[][] get_fundings(){
+    float[][] fundings = new float[this.candidates.length][9];
+    for (int i = 0; i < fundings.length; i++){
+      for (int j = 0; j < 9; j++){
+        fundings[i][j] = this.candidates[i].funding[j];
+      }
+    }
+    return fundings;
+  }
+  
+  String[] get_months(){
+    String[] months = new String[9];
+    for (int i = 0; i < 9; i++){
+      months[i] = this.headers[i+4];
+    }
+    return months;
+  }
+}
+
+class Candidate{
+  String name;
+  String state;
+  String party;
+  float[] funding;
+  Candidate(String name, String state, String party, float[] funding){
+    this.name = name;
+    this.state = state;
+    this.party = party;
+    this.funding = funding;
   }
 }
