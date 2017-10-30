@@ -31,6 +31,7 @@ class Line_Chart{
     float x, y, wid, hgt;
     String lastname;
     int id;
+    color c;
     Button(String lastname, int id, float x, float y){
       this.lastname = lastname;
       this.id = id;
@@ -41,9 +42,11 @@ class Line_Chart{
     }
     
     void draw(){
-      fill(100);
+      stroke(255);
       rect(x,y,wid,hgt);
-      text(lastname, x,y);
+      textAlign(LEFT,TOP);
+      fill(20);
+      text(lastname,x+2,y);
     }
     boolean isButtonClicked(){
       if (mouseX >= x && mouseX <= x + wid && mouseY >= y && mouseY <= y + hgt)
@@ -158,17 +161,39 @@ class Line_Chart{
   }
   
   void buttons(){
-    //bs = new Button[p.candidates.length];
-    bs = new Button[8];
-    //for (int i = 0; i < p.candidates.length; i++){
-    for (int i = 0; i < 8; i++){ 
-      Button b = new Button(p.candidates[i].lastname,i,x_frame + (i+1)*60, y_frame);
-      bs[i] = b;
+    bs = new Button[p.candidates.length];
+    for (int i = 0; i < p.candidates.length; i++){
+      if (i < 9){
+        for (i = 0; i < 9; i++){
+          Button b = new Button(p.candidates[i].lastname,i,(i+1)*60, y_frame-10);
+          b.c = #ffb4b4;
+          bs[i] = b;
+        }
+      } else if (i < 17){
+        for (i = 9; i < 17; i++){
+          Button b = new Button(p.candidates[i].lastname,i,(i-8)*60, y_frame+5);
+          b.c = #ffb4b4;
+          bs[i] = b;
+        }
+      } else if (i < 22){
+        for (i = 17; i < 22; i++){
+          Button b = new Button(p.candidates[i].lastname,i,(i-16)*60, y_frame+20);
+          b.c = #b5deff;
+          bs[i] = b;
+        }
+      } else {
+        for (i = 22; i < p.candidates.length; i++){
+          Button b = new Button(p.candidates[i].lastname,i,(i-21)*60, y_frame+35);
+          b.c = #b3f7af;
+          bs[i] = b;
+        }
+      }
     }
   }
   
   void draw_buttons(){
-    for (int i = 0; i < 8; i++){
+    for (int i = 0; i < p.candidates.length; i++){
+      fill(bs[i].c);
       bs[i].draw();
     }
   }
