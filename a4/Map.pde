@@ -57,7 +57,7 @@ class Map{
   }
   
   color select_color(float funding){
-    color c = color(255,int(200-funding/44000000),int(150-funding/20000000));
+    color c = color(255,int(255-funding/3770000),int(255-funding/1800000));
     return c;
   }
 }
