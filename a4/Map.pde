@@ -27,18 +27,55 @@ class Map{
   void draw(){
     background(255);  // Ocean colour
     stroke(255);               // Boundary colour
-    //fill(210); // Land colour
-    //geoMap.draw();              // Draw the entire map.
+
     arrange(9); // init the statefunding based on the parameter "month"
-    // redraw the states that appear in the data 
+    // draw the states that appear in the data in specific color based on the amount of funding
     for (int i = 1; i < 52; i++) {
       if (statefunding.containsKey(i)) fill(select_color(statefunding.get(i)));
       else fill(210);
       geoMap.draw(i);
     }
-    // Find the country at mouse position and draw in different colour.
+    
+    //for selected party
+    //String par = "Republican";
+    //Set<Integer> states = new HashSet<Integer>();
+    //for (int i = 0; i < p.candidates.length; i++) {
+    //  if (p.candidates[i].party.equals(par)) states.add(stateid.get(p.candidates[i].state));
+    //}
+    //for (Integer state: states){
+    //  fill(select_color(statefunding.get(state)));
+    //  stroke(#6220ff);
+    //  strokeWeight(2);
+    //  geoMap.draw(state);
+    //  strokeWeight(1);
+    //}
+    
+    //for selected candidate
+    //int i = 10;
+    //int index = stateid.get(p.candidates[i].state);
+    //fill(select_color(statefunding.get(index)));
+    //  stroke(#6220ff);
+    //  strokeWeight(2);
+    //  geoMap.draw(index);
+    //  strokeWeight(1);
+    
+    //for selected state (click the map)
+    int i = 41;
+    if(map.statefunding.containsKey(i)){
+      stroke(#6220ff);
+      strokeWeight(2);
+      geoMap.draw(i);
+      strokeWeight(1);
+      textAlign(CENTER,CENTER);
+      textSize(30);
+      fill(#ff2088);
+      text(geoMap.getAttributeTable().findRow(str(i),0).getString("Abbrev")+": $"+map.statefunding.get(i)/1000000+"M", 900,150);
+    }
+    
+    //Find the country at mouse position and draw in different colour.
     int id = geoMap.getID(mouseX, mouseY);
     if (id != -1) {
+
       stroke(#998285);
       strokeWeight(2);
       if (statefunding.containsKey(id)) fill(select_color(statefunding.get(id)));
@@ -59,6 +96,13 @@ class Map{
   color select_color(float funding){
     color c = color(255,int(255-funding/3770000),int(255-funding/1800000));
     return c;
+  }
+  
+  void mouseClicked(){
+    int id = geoMap.getID(mouseX, mouseY);
+    if (id != -1){
+      println("id");
+    }
   }
 }
  

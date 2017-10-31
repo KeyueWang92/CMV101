@@ -1,5 +1,5 @@
 import org.gicentre.geomap.*;
-
+import java.util.*;
 GeoMap geoMap = new GeoMap(650,20,500,350,this);
 
 Parser p;
@@ -27,6 +27,17 @@ void mouseClicked(){
     if (lc.bs[i].isMouseOn()){
        //state =  Selected_candidate(i);
        println("clicked " + i);
+    }
+  }
+  int id = geoMap.getID(mouseX, mouseY);
+  if (id != -1){
+    if(map.statefunding.containsKey(id)){
+      println("$"+map.statefunding.get(id)/1000000+"M");
+      //STATE = Selected_state(id)
+      //textAlign(CENTER,CENTER);
+      //textSize(30);
+      //fill(#ff2088);
+      //text("$"+map.statefunding.get(id)/1000000+"M", 900,150);
     }
   }
 }
