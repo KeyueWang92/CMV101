@@ -48,7 +48,8 @@ class Line_Chart{
       fill(20);
       text(lastname,x+2,y);
     }
-    boolean isButtonClicked(){
+    
+    boolean isMouseOn(){
       if (mouseX >= x && mouseX <= x + wid && mouseY >= y && mouseY <= y + hgt)
       return true;
       else return false;
@@ -100,14 +101,59 @@ class Line_Chart{
     }
   }
   
-  void draw(){
+  void draw(){    
+    //if state == ALL
+    //draw_background
+    fill(#edf4ff);
+    stroke(#edf4ff);
+    rect(2*gap+x_frame,100,(width_bar+gap)*8, 640);
+    
     draw_axis();
     draw_buttons();
+    
+    //draw lines
     for(int i = 0; i < fundings.length; i++){
       fill(colors[i][0], colors[i][1], colors[i][2]);
       stroke(colors[i][0], colors[i][1], colors[i][2]);
       draw_aline(lines.get(i));
     }
+    
+    //if state == Selected_candidate(index)
+    //for(int i = 0; i < p.candidates.length; i++){
+    //  if (index == i) {
+    //    fill(colors[i][0], colors[i][1], colors[i][2]);
+    //    stroke(colors[i][0], colors[i][1], colors[i][2]);
+    //  }
+    //  else {
+    //    fill(200);
+    //    stroke(200);
+    //  }
+    //  draw_aline(lines.get(i));
+    //}
+    
+    //if state == Selected_state(id)
+    //for(int i = 0; i < p.candidates.length;i++){
+    //  if (map.stateid.get(p.candidates[i].state) == id) {
+    //    fill(colors[i][0], colors[i][1], colors[i][2]);
+    //    stroke(colors[i][0], colors[i][1], colors[i][2]);
+    //  } else {
+    //    fill(200);
+    //    stroke(200);
+    //  }
+    //  draw_aline(lines.get(i));
+    //}
+    
+    //if state == Selected_party(party)
+    //for(int i = 0; i < p.candidates.length;i++){
+    //  if (p.candidates[i].party) == party) {
+    //    fill(colors[i][0], colors[i][1], colors[i][2]);
+    //    stroke(colors[i][0], colors[i][1], colors[i][2]);
+    //  } else {
+    //    fill(200);
+    //    stroke(200);
+    //  }
+    //  draw_aline(lines.get(i));
+    //}
   }
   
   void draw_axis(){
@@ -136,16 +182,6 @@ class Line_Chart{
       temp -= y_gap;
     }
     line(x_frame, height-y_frame, x_frame, temp);
-    
-    
-    //// add the x-y-labels
-    //fill(25,25,112); 
-    //text(headers[0]+" Time", canvas1_w/2, height*0.99);
-    //pushMatrix();
-    //translate(0.025*600, 0.5*height);
-    //rotate(radians(270));
-    //text("Temperature "+headers[1], 0,0);
-    //popMatrix(); 
   }
   
   void draw_aline(ArrayList<Line> line){
@@ -193,7 +229,8 @@ class Line_Chart{
   
   void draw_buttons(){
     for (int i = 0; i < p.candidates.length; i++){
-      fill(bs[i].c);
+      if (bs[i].isMouseOn()) fill(255);
+      else fill(bs[i].c);
       bs[i].draw();
     }
   }

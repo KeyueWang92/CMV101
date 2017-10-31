@@ -20,3 +20,11 @@ void draw(){
   map.draw();
   lc.draw();
 }
+  
+void mouseClicked(){
+  for(int i = 0; i < lc.bs.length;i++){
+    if (lc.bs[i].isMouseOn()){
+       //state =  Selected_candidate(i);
+    }
+  }
+}
