@@ -29,7 +29,7 @@ class Map{
     stroke(255);               // Boundary colour
     //fill(210); // Land colour
     //geoMap.draw();              // Draw the entire map.
-    arrange(9);
+    arrange(9); // init the statefunding based on the parameter "month"
     // redraw the states that appear in the data 
     for (int i = 1; i < 52; i++) {
       if (statefunding.containsKey(i)) fill(select_color(statefunding.get(i)));
@@ -39,8 +39,12 @@ class Map{
     // Find the country at mouse position and draw in different colour.
     int id = geoMap.getID(mouseX, mouseY);
     if (id != -1) {
-      fill(180, 120, 120);      // Highlighted land colour.
-      geoMap.draw(id);  
+      stroke(#998285);
+      strokeWeight(2);
+      if (statefunding.containsKey(id)) fill(select_color(statefunding.get(id)));
+      else fill(210);
+      geoMap.draw(id);
+      strokeWeight(1);
       // get the state name using id.
       String name = geoMap.getAttributeTable().findRow(str(id),0).getString("Abbrev"); 
       fill(0);
