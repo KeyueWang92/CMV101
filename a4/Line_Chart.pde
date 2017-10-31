@@ -88,7 +88,6 @@ class Line_Chart{
   }
   
   void arrange(){
-
     for (ArrayList<Line> line: lines){
       for(Line l: line){
       l.x1 = x_frame+ (l.index+1)*gap + (l.index * width_bar) + width_bar/2;
@@ -125,13 +124,14 @@ class Line_Chart{
     //    stroke(colors[i][0], colors[i][1], colors[i][2]);
     //  }
     //  else {
-    //    fill(200);
-    //    stroke(200);
+    //    fill(220);
+    //    stroke(220);
     //  }
     //  draw_aline(lines.get(i));
     //}
     
     //if state == Selected_state(id)
+    //int id = 41;
     //for(int i = 0; i < p.candidates.length;i++){
     //  if (map.stateid.get(p.candidates[i].state) == id) {
     //    fill(colors[i][0], colors[i][1], colors[i][2]);
@@ -144,8 +144,9 @@ class Line_Chart{
     //}
     
     //if state == Selected_party(party)
+    //String par = "Other";
     //for(int i = 0; i < p.candidates.length;i++){
-    //  if (p.candidates[i].party) == party) {
+    //  if (p.candidates[i].party.equals(par)) {
     //    fill(colors[i][0], colors[i][1], colors[i][2]);
     //    stroke(colors[i][0], colors[i][1], colors[i][2]);
     //  } else {

@@ -26,6 +26,7 @@ void mouseClicked(){
   for(int i = 0; i < lc.bs.length;i++){
     if (lc.bs[i].isMouseOn()){
        //state =  Selected_candidate(i);
+       println("clicked " + i);
     }
   }
 }
