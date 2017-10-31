@@ -1,5 +1,6 @@
 class Map{
   HashMap<String, Integer> stateid;
+  HashMap<Integer, Float> statefunding;
   GeoMap geoMap;
   Map(GeoMap geoMap){
     stateid = new HashMap<String, Integer>();
@@ -11,22 +12,49 @@ class Map{
     }
   }
   
+  void arrange(int month){
+    statefunding = new HashMap<Integer, Float>();
+    for (int i = 0; i < p.candidates.length; i++){
+      for (int j = 0; j < month; j++) {
+        int stateid = this.stateid.get(p.candidates[i].state);
+        if (statefunding.containsKey(stateid)) 
+          statefunding.put(stateid,statefunding.get(stateid) + p.candidates[i].funding[j]);
+        else statefunding.put(stateid, p.candidates[i].funding[j]);
+      }
+    }
+  }
+
   void draw(){
     background(255);  // Ocean colour
-    stroke(0,40);               // Boundary colour
-    fill(210);          // Land colour
-    geoMap.draw();              // Draw the entire map.
-   
+    stroke(255);               // Boundary colour
+    //fill(210); // Land colour
+    //geoMap.draw();              // Draw the entire map.
+    arrange(9);
+    // redraw the states that appear in the data 
+    for (int i = 1; i < 52; i++) {
+      if (statefunding.containsKey(i)) fill(select_color(statefunding.get(i)));
+      else fill(210);
+      geoMap.draw(i);
+    }
     // Find the country at mouse position and draw in different colour.
     int id = geoMap.getID(mouseX, mouseY);
     if (id != -1) {
       fill(180, 120, 120);      // Highlighted land colour.
       geoMap.draw(id);  
       // get the state name using id.
-      String name = geoMap.getAttributeTable().findRow(str(id),0).getString("Abbrev");    
+      String name = geoMap.getAttributeTable().findRow(str(id),0).getString("Abbrev"); 
       fill(0);
       text(name, mouseX+5, mouseY-5);
+      if (statefunding.containsKey(id)){
+        Float funding = statefunding.get(id)/1000000;
+        text("$"+funding+"M", mouseX+5, mouseY+10);
+      }
     }
+  }
+  
+  color select_color(float funding){
+    color c = color(255,int(200-funding/44000000),int(150-funding/20000000));
+    return c;
   }
 }
  

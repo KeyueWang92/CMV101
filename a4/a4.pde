@@ -1,4 +1,5 @@
 import org.gicentre.geomap.*;
+
 GeoMap geoMap = new GeoMap(650,20,500,350,this);
 
 Parser p;
