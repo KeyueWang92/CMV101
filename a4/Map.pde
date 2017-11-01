@@ -25,7 +25,7 @@ class Map{
   }
 
   void draw(){
-    background(255);  // Ocean colour
+    //background(255);  // Ocean colour
     stroke(255);               // Boundary colour
 
     arrange(9); // init the statefunding based on the parameter "month"

@@ -2,7 +2,6 @@ class Parser{
   private String[] lines;
   public String[] headers;
   public Candidate[] candidates;
-  
   Parser(String filename) {
     lines = loadStrings(filename);
     candidates = new Candidate[lines.length-1];
@@ -59,5 +58,17 @@ class Candidate{
     this.state = state;
     this.party = party;
     this.funding = funding;
+  }
+  public String getName(){
+    return this.name;
+  }
+  public String getState(){
+    return this.state;
+  }
+  public String getParty(){
+    return this.party;
+  }
+  public float[] getFunding(){
+    return this.funding;
   }
 }
