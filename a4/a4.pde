@@ -10,23 +10,26 @@ Map map;
 Pie pie_chart;
 Line_Chart lc;
 Candidate can;
+Candidate can2;
 
 void setup(){
   frameRate(10);
   size(1200,800);
-  TIME = 0;
-  PARTY = "Republican";
+  TIME = 8;
+  PARTY = "ALL_PARTY";
   STATE = "ALL_STATE";
   p = new Parser("./data.csv");
   map = new Map(geoMap);
   pie_chart = new Pie(p);
   lc = new Line_Chart(p);
+  can = null;
+  can2 = null;
 }
 
 void draw(){
   fill(0);
   //background(0);
-  //stroke(255);
+  stroke(0);
   //fill(255);
   rect(0, 0, width, height);
   map.draw();
@@ -39,21 +42,23 @@ void mouseClicked(){
   if(mouseButton == LEFT){
     //get the clicked candidate from pie chart
     can = pie_chart.clicked();
+    can2 = lc.clicked();
+    if (can == null){
+      can = lc.clicked();
+    }
     if(can != null){
       PARTY = can.party;
       STATE = can.state;
     }
+    TIME = lc.click_time();
   }else if (mouseButton == RIGHT){
     PARTY = "ALL_PARTY";
     STATE = "ALL_STATE";
+    can = null;
+    can2 = null;
+    TIME = 8;
   }
   
-  for(int i = 0; i < lc.bs.length;i++){
-    if (lc.bs[i].isMouseOn()){
-       //state =  Selected_candidate(i);
-       println("clicked " + i);
-    }
-  }
   int id = geoMap.getID(mouseX, mouseY);
   if (id != -1){
     if(map.statefunding.containsKey(id)){
@@ -64,4 +69,5 @@ void mouseClicked(){
       //fill(#ff2088);
       //text("$"+map.statefunding.get(id)/1000000+"M", 900,150);
     }
+  }
 }

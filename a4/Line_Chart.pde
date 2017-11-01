@@ -79,11 +79,11 @@ class Line_Chart{
   
   void set_color(){
     colors = new int[fundings.length][3];
-    Random r = new Random();
+    float fre = 0.3;
     for(int i = 0; i < fundings.length; i++){
-      colors[i][0] = r.nextInt(200)+30;
-      colors[i][1] = r.nextInt(200)+30;
-      colors[i][2] = r.nextInt(200)+30;
+      colors[i][0] = int(sin(fre*(i+5)+0)*127+128);
+      colors[i][1] = int(sin(fre*(i+5)+2)*127+128);
+      colors[i][2] = int(sin(fre*(i+5)+4)*127+128);
     }
   }
   
@@ -103,20 +103,51 @@ class Line_Chart{
   void draw(){    
     //if state == ALL
     //draw_background
-    fill(#edf4ff);
-    stroke(#edf4ff);
-    rect(2*gap+x_frame,100,(width_bar+gap)*8, 640);
+    fill(#4e3654);
+    stroke(#4e3654);
+    rect(2*gap+60,120,(width_bar+gap)*(TIME), 640);
     
     draw_axis();
     draw_buttons();
     
     //draw lines
-    for(int i = 0; i < fundings.length; i++){
-      fill(colors[i][0], colors[i][1], colors[i][2]);
-      stroke(colors[i][0], colors[i][1], colors[i][2]);
-      draw_aline(lines.get(i));
+    if (can == null){
+      for(int i = 0; i < fundings.length; i++){
+        fill(colors[i][0], colors[i][1], colors[i][2]);
+        stroke(colors[i][0], colors[i][1], colors[i][2]);
+        draw_aline(lines.get(i));
+      }
+    } 
+    // for selected candidate
+    else if (can2 != null){
+      int canid = 0;
+      for(int i = 0; i < p.candidates.length; i++){
+        if (can != p.candidates[i]) {
+          fill(220);
+          stroke(220);
+          draw_aline(lines.get(i));
+        }
+        else canid = i;
+      }
+      fill(colors[canid][0], colors[canid][1], colors[canid][2]);
+      stroke(colors[canid][0], colors[canid][1], colors[canid][2]);
+      draw_aline(lines.get(canid));
+    } 
+    // for selected party
+    else if (can != null){
+      String par = PARTY;
+      for(int i = 0; i < p.candidates.length;i++){
+        if (p.candidates[i].party.equals(par)) {
+          println("here");
+          fill(colors[i][0], colors[i][1], colors[i][2]);
+          stroke(colors[i][0], colors[i][1], colors[i][2]);
+        } else {
+          fill(220);
+          stroke(220);
+        }
+        draw_aline(lines.get(i));
+      }
     }
-    
     //if state == Selected_candidate(index)
     //for(int i = 0; i < p.candidates.length; i++){
     //  if (index == i) {
@@ -234,5 +265,24 @@ class Line_Chart{
       else fill(bs[i].c);
       bs[i].draw();
     }
+  }
+  
+  Candidate clicked(){
+    for(int i = 0; i < bs.length; i++){
+      if(bs[i].isMouseOn()){
+        return p.candidates[i];
+      }
+    }
+    return null;
+  }
+  
+  int click_time(){
+    int i = 0;
+    for (i = 0; i < 8; i++){
+      if (mouseX >= (2 * gap + 60 + i * (width_bar+gap)) && mouseX <= (2 * gap + 60 + (i+1) * (width_bar+gap))
+          && mouseY >= 120 && mouseY <= 760) 
+          break;
+    }
+    return i;
   }
 }
