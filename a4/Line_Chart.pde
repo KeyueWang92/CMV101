@@ -111,7 +111,7 @@ class Line_Chart{
     draw_buttons();
     
     //draw lines
-    if (can == null){
+    if (STATE.equals("ALL_STATE") && PARTY.equals("ALL_PARTY")){
       for(int i = 0; i < fundings.length; i++){
         fill(colors[i][0], colors[i][1], colors[i][2]);
         stroke(colors[i][0], colors[i][1], colors[i][2]);
@@ -146,6 +146,25 @@ class Line_Chart{
           stroke(220);
         }
         draw_aline(lines.get(i));
+      }
+    }
+    //for selected state
+    else if (!STATE.equals("ALL_STATE")) {
+      ArrayList<Integer> cans = new ArrayList<Integer>();
+      for(int i = 0; i < p.candidates.length;i++){
+        if (STATE.equals(p.candidates[i].state)) {
+          cans.add(i);
+        } else {
+          fill(200);
+          stroke(200);
+          draw_aline(lines.get(i));
+        }        
+      }
+      for(int i = 0; i < cans.size();i++){
+        int canid = cans.get(i);
+        fill(colors[canid][0], colors[canid][1], colors[canid][2]);
+        stroke(colors[canid][0], colors[canid][1], colors[canid][2]);
+        draw_aline(lines.get(canid));
       }
     }
     //if state == Selected_candidate(index)
@@ -277,12 +296,14 @@ class Line_Chart{
   }
   
   int click_time(){
-    int i = 0;
-    for (i = 0; i < 8; i++){
+    for (int i = 0; i < 9; i++){
       if (mouseX >= (2 * gap + 60 + i * (width_bar+gap)) && mouseX <= (2 * gap + 60 + (i+1) * (width_bar+gap))
           && mouseY >= 120 && mouseY <= 760) 
+        {
+          TIME = i;
           break;
+        }
     }
-    return i;
+    return TIME;
   }
 }

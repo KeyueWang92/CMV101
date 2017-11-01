@@ -51,7 +51,7 @@ class Map{
     //}
     
     //for selected candidate
-    if (!STATE.equals("ALL_STATE")){
+    if (can != null && !STATE.equals("ALL_STATE")){
       int state = stateid.get(STATE);
       fill(select_color(statefunding.get(stateid.get(can.state))));
       stroke(#fffa00);
@@ -61,6 +61,15 @@ class Map{
       textSize(20);
       textAlign(TOP,LEFT);
       text(can.lastname+": $"+can.funding[TIME]/1000000+"M", 800,400);
+    } else if (!STATE.equals("ALL_STATE")){
+      int state = stateid.get(STATE);
+      fill(select_color(statefunding.get(state)));
+      stroke(#fffa00);
+      strokeWeight(2);
+      geoMap.draw(state);
+      textSize(20);
+      text(STATE+": $"+statefunding.get(state)/1000000+"M", 800,400);
+      strokeWeight(1);
     }
 
     // DO NOT NEED TO CLICK THE MAP
@@ -104,11 +113,12 @@ class Map{
     return c;
   }
   
-  void mouseClicked(){
+  String clicked(){
     int id = geoMap.getID(mouseX, mouseY);
-    if (id != -1){
-      println("id");
+    if (id != -1 && statefunding.containsKey(id)){
+      return geoMap.getAttributeTable().findRow(str(id),0).getString("Abbrev");
     }
+    else return null;
   }
 }
  

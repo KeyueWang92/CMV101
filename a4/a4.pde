@@ -41,6 +41,7 @@ void draw(){
 void mouseClicked(){
   if(mouseButton == LEFT){
     //get the clicked candidate from pie chart
+    if (map.clicked() != null) STATE = map.clicked();
     can = pie_chart.clicked();
     can2 = lc.clicked();
     if (can == null){
