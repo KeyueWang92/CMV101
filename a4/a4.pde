@@ -1,4 +1,5 @@
 import org.gicentre.geomap.*;
+import java.util.*;
 GeoMap geoMap = new GeoMap(650,20,500,350,this);
 
 int TIME;
@@ -32,6 +33,8 @@ void draw(){
   pie_chart.draw();
   lc.draw();
 }
+
+
 void mouseClicked(){
   if(mouseButton == LEFT){
     //get the clicked candidate from pie chart
@@ -44,4 +47,21 @@ void mouseClicked(){
     PARTY = "ALL_PARTY";
     STATE = "ALL_STATE";
   }
+  
+  for(int i = 0; i < lc.bs.length;i++){
+    if (lc.bs[i].isMouseOn()){
+       //state =  Selected_candidate(i);
+       println("clicked " + i);
+    }
+  }
+  int id = geoMap.getID(mouseX, mouseY);
+  if (id != -1){
+    if(map.statefunding.containsKey(id)){
+      println("$"+map.statefunding.get(id)/1000000+"M");
+      //STATE = Selected_state(id)
+      //textAlign(CENTER,CENTER);
+      //textSize(30);
+      //fill(#ff2088);
+      //text("$"+map.statefunding.get(id)/1000000+"M", 900,150);
+    }
 }
