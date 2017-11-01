@@ -7,8 +7,10 @@ HashMap<String, Integer> time_to_int;
 Parser p;
 Map map;
 Pie pie_chart;
+Line_Chart lc;
 
 void setup(){
+  frameRate(10);
   size(1200,800);
   TIME = 0;
   PARTY = "Republican";
@@ -16,9 +18,14 @@ void setup(){
   p = new Parser("./data.csv");
   map = new Map(geoMap);
   pie_chart = new Pie(p);
+  lc = new Line_Chart(p);
 }
 
 void draw(){
-  map.draw_map();
+  stroke(255);
+  fill(255);
+  rect(0, 0, width, height);
+  map.draw();
   pie_chart.draw();
+  lc.draw();
 }
