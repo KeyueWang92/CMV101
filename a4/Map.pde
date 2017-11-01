@@ -12,7 +12,7 @@ class Map{
   }
   
   void draw(){
-    background(255);  // Ocean colour
+    //background(255);  // Ocean colour
     stroke(0,40);               // Boundary colour
     fill(210);          // Land colour
     geoMap.draw();              // Draw the entire map.

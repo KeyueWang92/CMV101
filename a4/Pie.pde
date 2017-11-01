@@ -2,35 +2,56 @@ class Pie{
   float x, y, dia, start, end;
   float ratio, value;
   ArrayList<Slice> slices = new ArrayList<Slice>();
+  ArrayList<Slice> s_to_show;
   color repub, demo, other;
+  String curr_state;
+  Parser p;
   Pie(Parser p){
+    this.p = p;
     this.x = 900;
     this.y = 600;
     this.dia = 600/2;
     this.repub = color(233,29,14);
     this.demo = color(35,32,102);
     this.other = color(203,230,53);
+    this.curr_state = "ALL_PARTY";
     for(int i=0; i<p.candidates.length;i++){
-      Slice s = new Slice(p.candidates[i].getParty(), 
+      Slice s = new Slice(i, p.candidates[i].getParty(), 
                           p.candidates[i].getName(),
                           p.candidates[i].getFunding());
       if(s.party.equals("Republican")){
-        s.setColor(color(233,29,14));
+        s.setColor(#ffb4b4);
       }else if(s.party.equals("Democrat")){
-        s.setColor(color(35,32,102));
+        s.setColor(#b5deff);
       }else{
-        s.setColor(color(203,230,53));
+        s.setColor(#b3f7af);
       }        
       slices.add(s);
     }
   }
   void draw(){
-    ArrayList<Slice> ss = arrange(data_filter());
-    //println(ss.size());
-    for(Slice s:ss){
-      //println(s.party);
+    s_to_show = arrange(data_filter());
+    for(Slice s:s_to_show){
       s.draw();
     }
+    for(Slice s:s_to_show){
+          if(s.show_data){
+            //fill(#CCCC00);
+            fill(255);
+            textSize(13);
+            textAlign(CENTER, CENTER);
+            text("Funding: "+s.value[TIME], mouseX, mouseY-35);
+            text(s.name, mouseX, mouseY-20);
+          }
+      }
+  }
+  Candidate clicked(){
+    for(Slice s:s_to_show){
+      if(s.mouse_in()){
+        return p.candidates[s.id];
+      }
+    }
+    return null;
   }
   
   //filter the data by the party it belongs to
@@ -62,13 +83,15 @@ class Pie{
   }
   
   private class Slice{
+    int id;
     float x, y;
     float[] value;
     String party, name;
     float wid, hgt, start, end;
     color c;
     boolean show_data;
-    Slice(String party, String name, float[] value){  
+    Slice(int id, String party, String name, float[] value){  
+      this.id = id;
       this.party = party;
       this.name = name;
       this.value = value;
@@ -91,25 +114,33 @@ class Pie{
       if(angle < 0){
         angle += 2*PI;
       }   
-      return sq(mouseX-x)+sq(mouseY-y) <= sq(wid/2) &&
+      return sq(mouseX-(x+10*cos((start+end)/2)))+sq(mouseY-(y+10*sin((start+end)/2))) <= sq(wid/2) &&
               angle >= start && angle <= end;
     }
     
     void draw(){
-      fill(this.c);
+      color c1 = this.c;
       if(mouse_in()){
         if(this.party.equals("Republican")){
-          fill(repub);
+          c1 = repub;
         }else if (this.party.equals("Democrat")){
-          fill(demo);
+          c1= demo;
         }else{
-          fill(other);
+          c1 = other;
         }
-        arc(x, y, wid+15, hgt+15, start, end, PIE);
+        this.show_data = true;
+      }else{
+        this.show_data = false;
+      }
+      fill(c1);
+      if(mouse_in()){
+        //stroke(0);
+        arc(x+10*cos((start+end)/2), y+10*sin((start+end)/2), wid+15, hgt+15, start, end);
       }else{
         arc(x, y, wid, hgt, start, end, PIE);
+        stroke(255);
       }
-      strokeWeight(2);
+      strokeWeight(1);
     }
   }
 }
