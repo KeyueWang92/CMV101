@@ -8,6 +8,7 @@ Parser p;
 Map map;
 Pie pie_chart;
 Line_Chart lc;
+Candidate can;
 
 void setup(){
   frameRate(10);
@@ -22,10 +23,25 @@ void setup(){
 }
 
 void draw(){
-  stroke(255);
-  fill(255);
+  fill(0);
+  //background(0);
+  //stroke(255);
+  //fill(255);
   rect(0, 0, width, height);
   map.draw();
   pie_chart.draw();
   lc.draw();
+}
+void mouseClicked(){
+  if(mouseButton == LEFT){
+    //get the clicked candidate from pie chart
+    can = pie_chart.clicked();
+    if(can != null){
+      PARTY = can.party;
+      STATE = can.state;
+    }
+  }else if (mouseButton == RIGHT){
+    PARTY = "ALL_PARTY";
+    STATE = "ALL_STATE";
+  }
 }
