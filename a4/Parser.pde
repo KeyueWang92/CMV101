@@ -1,18 +1,6 @@
 class Parser{
   public String[] lines;
   public Candidate[] candidates;
-  class Candidate{
-    String name;
-    String state;
-    String party;
-    float[] funding;
-    Candidate(String name, String state, String party, float[] funding){
-      this.name = name;
-      this.state = state;
-      this.party = party;
-      this.funding = funding;
-    }
-  }
   Parser(String filename) {
     lines = loadStrings(filename);
     candidates = new Candidate[lines.length-1];
@@ -36,5 +24,29 @@ class Parser{
       funding[8] = float(data[13]);
       candidates[i-1] = new Candidate(lastname+firstname, state, party, funding);
     }
+  }
+}
+public class Candidate{
+  String name;
+  String state;
+  String party;
+  float[] funding;
+  Candidate(String name, String state, String party, float[] funding){
+    this.name = name;
+    this.state = state;
+    this.party = party;
+    this.funding = funding;
+  }
+  public String getName(){
+    return this.name;
+  }
+  public String getState(){
+    return this.state;
+  }
+  public String getParty(){
+    return this.party;
+  }
+  public float[] getFunding(){
+    return this.funding;
   }
 }
