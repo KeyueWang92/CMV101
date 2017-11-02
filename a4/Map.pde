@@ -51,7 +51,7 @@ class Map{
     //}
     
     //for selected candidate
-    if (can != null && !STATE.equals("ALL_STATE")){
+    if (can2 != null){
       int state = stateid.get(STATE);
       fill(select_color(statefunding.get(stateid.get(can.state))));
       stroke(#fffa00);
@@ -61,15 +61,18 @@ class Map{
       textSize(20);
       textAlign(TOP,LEFT);
       text(can.lastname+": $"+can.funding[TIME]/1000000+"M", 800,400);
-    } else if (!STATE.equals("ALL_STATE")){
-      int state = stateid.get(STATE);
-      fill(select_color(statefunding.get(state)));
-      stroke(#fffa00);
-      strokeWeight(2);
-      geoMap.draw(state);
-      textSize(20);
-      text(STATE+": $"+statefunding.get(state)/1000000+"M", 800,400);
-      strokeWeight(1);
+    } else if (can2 == null && can != null){
+      Set<Integer> states = new HashSet<Integer>();
+      for (int i = 0; i < p.candidates.length; i++) {
+        if (p.candidates[i].party.equals(PARTY)) states.add(stateid.get(p.candidates[i].state));
+      }
+      for (Integer state: states){
+        fill(select_color(statefunding.get(state)));
+        stroke(#d0ff00);
+        strokeWeight(2);
+        geoMap.draw(state);
+        strokeWeight(1);
+      }
     }
 
     // DO NOT NEED TO CLICK THE MAP
