@@ -15,7 +15,7 @@ class Map{
   void arrange(int month){
     statefunding = new HashMap<Integer, Float>();
     for (int i = 0; i < p.candidates.length; i++){
-      for (int j = 0; j < month; j++) {
+      for (int j = 0; j <= month; j++) {
         int stateid = this.stateid.get(p.candidates[i].state);
         if (statefunding.containsKey(stateid)) 
           statefunding.put(stateid,statefunding.get(stateid) + p.candidates[i].funding[j]);
@@ -28,7 +28,7 @@ class Map{
     //background(255);  // Ocean colour
     stroke(255);               // Boundary colour
 
-    arrange(TIME+1); // init the statefunding based on the parameter "month"
+    arrange(TIME); // init the statefunding based on the parameter "month"
     // draw the states that appear in the data in specific color based on the amount of funding
     for (int i = 1; i < 52; i++) {
         if (statefunding.containsKey(i)) fill(select_color(statefunding.get(i)));

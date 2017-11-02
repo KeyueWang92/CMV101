@@ -11,6 +11,8 @@ Pie pie_chart;
 Line_Chart lc;
 Candidate can;
 Candidate can2;
+boolean loop;
+int count;
 
 void setup(){
   frameRate(10);
@@ -24,17 +26,32 @@ void setup(){
   lc = new Line_Chart(p);
   can = null;
   can2 = null;
+  loop = false;
+  count = 0;
 }
 
 void draw(){
   fill(0);
-  //background(0);
   stroke(0);
-  //fill(255);
   rect(0, 0, width, height);
   map.draw();
   pie_chart.draw();
   lc.draw();
+  fill(255);
+  noStroke();
+  rect(620,720,80,30);
+  fill(100);
+  text("see the trend",620,720);
+  if (loop == true) {
+    if (count == 10) {
+      count = 0;
+      TIME++;
+      TIME = TIME % 9;
+      PARTY = "ALL_PARTY";
+      STATE = "ALL_STATE";
+    }
+    count++;
+  }
 }
 
 
@@ -52,12 +69,18 @@ void mouseClicked(){
       STATE = can.state;
     }
     TIME = lc.click_time();
+    if (mouseX >= 620 && mouseX <= 700 && mouseY >= 720 && mouseY <= 750) {
+      loop = true;
+      TIME = 0;
+    }
   }else if (mouseButton == RIGHT){
+    //reset all
     PARTY = "ALL_PARTY";
     STATE = "ALL_STATE";
     can = null;
     can2 = null;
     TIME = 8;
+    loop = false;
   }
   
   int id = geoMap.getID(mouseX, mouseY);
