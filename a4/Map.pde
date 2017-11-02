@@ -52,15 +52,15 @@ class Map{
     
     //for selected candidate
     if (can2 != null){
-      int state = stateid.get(STATE);
-      fill(select_color(statefunding.get(stateid.get(can.state))));
+      int state = stateid.get(can2.state);
+      fill(select_color(statefunding.get(stateid.get(can2.state))));
       stroke(#fffa00);
       strokeWeight(2);
       geoMap.draw(state);
       strokeWeight(1);
       textSize(20);
       textAlign(TOP,LEFT);
-      text(can.lastname+": $"+can.funding[TIME]/1000000+"M", 800,400);
+      text(can2.lastname+": $"+can2.funding[TIME]/1000000+"M", 800,400);
     } else if (can2 == null && can != null){
       Set<Integer> states = new HashSet<Integer>();
       for (int i = 0; i < p.candidates.length; i++) {

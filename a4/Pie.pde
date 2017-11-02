@@ -35,6 +35,8 @@ class Pie{
     for(Slice s:s_to_show){
       if(can != null && s.name.equals(can.name)){
         s.highlight = true;
+      }else if(can2 != null && s.name.equals(can2.name)){
+        s.highlight = true;
       }else if(s.state.equals(STATE_MAP)){
         s.highlight = true;
       }
