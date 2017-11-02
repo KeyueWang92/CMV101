@@ -18,7 +18,8 @@ class Pie{
     for(int i=0; i<p.candidates.length;i++){
       Slice s = new Slice(i, p.candidates[i].getParty(), 
                           p.candidates[i].getName(),
-                          p.candidates[i].getFunding());
+                          p.candidates[i].getFunding(),
+                          p.candidates[i].getState());
       if(s.party.equals("Republican")){
         s.setColor(#ffb4b4);
       }else if(s.party.equals("Democrat")){
@@ -32,7 +33,13 @@ class Pie{
   void draw(){
     s_to_show = arrange(data_filter());
     for(Slice s:s_to_show){
+      if(can != null && s.name.equals(can.name)){
+        s.highlight = true;
+      }else if(s.state.equals(STATE_MAP)){
+        s.highlight = true;
+      }
       s.draw();
+      s.highlight = false;
     }
     for(Slice s:s_to_show){
           if(s.show_data){
@@ -86,15 +93,16 @@ class Pie{
     int id;
     float x, y;
     float[] value;
-    String party, name;
+    String party, name, state;
     float wid, hgt, start, end;
     color c;
-    boolean show_data;
-    Slice(int id, String party, String name, float[] value){  
+    boolean show_data, highlight;
+    Slice(int id, String party, String name, float[] value, String state){  
       this.id = id;
       this.party = party;
       this.name = name;
       this.value = value;
+      this.state = state;
     }
     void setColor(color c){
       this.c = c;
@@ -133,14 +141,13 @@ class Pie{
         this.show_data = false;
       }
       fill(c1);
-      if(mouse_in()){
-        //stroke(0);
+      stroke(255);
+      strokeWeight(1);
+      if(mouse_in() || highlight){
         arc(x+10*cos((start+end)/2), y+10*sin((start+end)/2), wid+15, hgt+15, start, end);
       }else{
         arc(x, y, wid, hgt, start, end, PIE);
-        stroke(255);
       }
-      strokeWeight(1);
     }
   }
 }

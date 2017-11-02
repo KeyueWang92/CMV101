@@ -3,7 +3,7 @@ import java.util.*;
 GeoMap geoMap = new GeoMap(650,20,500,350,this);
 
 int TIME;
-String PARTY, STATE;
+String PARTY, STATE, STATE_MAP;
 HashMap<String, Integer> time_to_int;
 Parser p;
 Map map;
@@ -57,8 +57,6 @@ void draw(){
 
 void mouseClicked(){
   if(mouseButton == LEFT){
-    //get the clicked candidate from pie chart
-    if (map.clicked() != null) STATE = map.clicked();
     can = pie_chart.clicked();
     can2 = lc.clicked();
     if (can == null){
@@ -73,6 +71,23 @@ void mouseClicked(){
       loop = true;
       TIME = 0;
     }
+    
+    //get the clicked candidate from pie chart
+    if (map.clicked() != null){
+      STATE = map.clicked();
+      STATE_MAP = map.clicked();
+      PARTY = "ALL_PARTY";
+    }else{
+      if(can2 != null){
+        STATE = can2.state;
+        PARTY = can2.party;
+      }else{
+        STATE = "ALL_STATE";
+        PARTY = "ALL_PARTY";
+      }
+      STATE_MAP = "";
+    }
+    println(STATE);
   }else if (mouseButton == RIGHT){
     //reset all
     PARTY = "ALL_PARTY";
