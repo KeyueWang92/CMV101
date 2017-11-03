@@ -36,20 +36,6 @@ class Map{
         geoMap.draw(i);
       }
     
-    //for selected party
-    //String par = "Republican";
-    //Set<Integer> states = new HashSet<Integer>();
-    //for (int i = 0; i < p.candidates.length; i++) {
-    //  if (p.candidates[i].party.equals(par)) states.add(stateid.get(p.candidates[i].state));
-    //}
-    //for (Integer state: states){
-    //  fill(select_color(statefunding.get(state)));
-    //  stroke(#6220ff);
-    //  strokeWeight(2);
-    //  geoMap.draw(state);
-    //  strokeWeight(1);
-    //}
-    
     //for selected candidate
     if (can2 != null){
       int state = stateid.get(can2.state);
@@ -74,25 +60,10 @@ class Map{
         strokeWeight(1);
       }
     }
-
-    // DO NOT NEED TO CLICK THE MAP
-    //for selected state (click the map)
-    //int i = 41;
-    //if(map.statefunding.containsKey(i)){
-    //  stroke(#6220ff);
-    //  strokeWeight(2);
-    //  geoMap.draw(i);
-    //  strokeWeight(1);
-    //  textAlign(CENTER,CENTER);
-    //  textSize(30);
-    //  fill(#ff2088);
-    //  text(geoMap.getAttributeTable().findRow(str(i),0).getString("Abbrev")+": $"+map.statefunding.get(i)/1000000+"M", 900,150);
-    //}
     
     //Find the country at mouse position and draw in different colour.
     int id = geoMap.getID(mouseX, mouseY);
     if (id != -1) {
-
       stroke(#998285);
       strokeWeight(2);
       if (statefunding.containsKey(id)) fill(select_color(statefunding.get(id)));
@@ -108,6 +79,14 @@ class Map{
         Float funding = statefunding.get(id)/1000000;
         text("$"+funding+"M", mouseX+5, mouseY+10);
       }
+    }
+    
+    if (can_hover != -1){
+      int sid = stateid.get(p.candidates[can_hover].state);
+      stroke(#d0ff00);
+      strokeWeight(2);
+      geoMap.draw(sid);
+      strokeWeight(1);
     }
   }
   

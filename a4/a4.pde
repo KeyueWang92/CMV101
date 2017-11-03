@@ -13,6 +13,7 @@ Candidate can;
 Candidate can2;
 boolean loop;
 int count;
+int can_hover;
 
 void setup(){
   frameRate(10);
@@ -52,6 +53,7 @@ void draw(){
     }
     count++;
   }
+  can_hover = lc.hover_button();
 }
 
 

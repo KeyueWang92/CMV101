@@ -167,44 +167,20 @@ class Line_Chart{
         draw_aline(lines.get(canid));
       }
     }
-    //if state == Selected_candidate(index)
-    //for(int i = 0; i < p.candidates.length; i++){
-    //  if (index == i) {
-    //    fill(colors[i][0], colors[i][1], colors[i][2]);
-    //    stroke(colors[i][0], colors[i][1], colors[i][2]);
-    //  }
-    //  else {
-    //    fill(220);
-    //    stroke(220);
-    //  }
-    //  draw_aline(lines.get(i));
-    //}
     
-    //if state == Selected_state(id)
-    //int id = 41;
-    //for(int i = 0; i < p.candidates.length;i++){
-    //  if (map.stateid.get(p.candidates[i].state) == id) {
-    //    fill(colors[i][0], colors[i][1], colors[i][2]);
-    //    stroke(colors[i][0], colors[i][1], colors[i][2]);
-    //  } else {
-    //    fill(200);
-    //    stroke(200);
-    //  }
-    //  draw_aline(lines.get(i));
-    //}
-    
-    //if state == Selected_party(party)
-    //String par = "Other";
-    //for(int i = 0; i < p.candidates.length;i++){
-    //  if (p.candidates[i].party.equals(par)) {
-    //    fill(colors[i][0], colors[i][1], colors[i][2]);
-    //    stroke(colors[i][0], colors[i][1], colors[i][2]);
-    //  } else {
-    //    fill(200);
-    //    stroke(200);
-    //  }
-    //  draw_aline(lines.get(i));
-    //}
+    //highlight line for hover
+    if(can_hover != -1){
+      for(int i = 0; i < p.candidates.length;i++){
+        if (i != can_hover){
+          fill(200);
+          stroke(200);
+          draw_aline(lines.get(i));
+        }        
+      }
+      fill(colors[can_hover][0], colors[can_hover][1], colors[can_hover][2]);
+      stroke(colors[can_hover][0], colors[can_hover][1], colors[can_hover][2]);
+      draw_aline(lines.get(can_hover));
+    }
   }
   
   void draw_axis(){
@@ -306,4 +282,14 @@ class Line_Chart{
     }
     return TIME;
   }
+  
+  int hover_button(){
+    int i = 0;
+    for (i = 0; i < bs.length; i++){
+      if(bs[i].isMouseOn())
+        return i;
+    }
+    return -1;
+  }
+  
 }
