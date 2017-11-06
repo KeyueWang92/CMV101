@@ -56,6 +56,15 @@ class Pie{
           }
       }
   }
+  int hover(){
+    for (Slice s:s_to_show){
+      if (s.mouse_in()){
+        return s.id;
+      }
+    }
+    return -1;
+  }
+  
   Candidate clicked(){
     for(Slice s:s_to_show){
       if(s.mouse_in()){

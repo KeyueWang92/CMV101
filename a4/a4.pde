@@ -54,6 +54,7 @@ void draw(){
     count++;
   }
   can_hover = lc.hover_button();
+  can_hover = can_hover == -1 ? pie_chart.hover() : can_hover;
 }
 
 
