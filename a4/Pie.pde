@@ -39,6 +39,8 @@ class Pie{
         s.highlight = true;
       }else if(s.state.equals(STATE_MAP)){
         s.highlight = true;
+      }else if(can_hover != -1 && p.candidates[can_hover].name.equals(s.name)){
+        s.highlight = true;
       }
       s.draw();
       s.highlight = false;
