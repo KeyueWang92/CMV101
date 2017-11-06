@@ -180,6 +180,12 @@ class Line_Chart{
       fill(colors[can_hover][0], colors[can_hover][1], colors[can_hover][2]);
       stroke(colors[can_hover][0], colors[can_hover][1], colors[can_hover][2]);
       draw_aline(lines.get(can_hover));
+      fill(255);
+      strokeWeight(4);
+      textSize(25);
+      text(p.candidates[can_hover].name+": $"+p.candidates[can_hover].funding[TIME]/1000000+"M",600,400);
+      strokeWeight(1);
+      textSize(12);
     }
   }
   
